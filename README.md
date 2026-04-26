@@ -1,4 +1,4 @@
-# event-intensity-sleep-recovery-analysis
+# Impact of High-Stimulation Events on Sleep Recovery
 This project explores how high-stimulation environments (e.g., concerts, festivals, nightlife events) impact next-day sleep quality and recovery duration.
 
 Using a self-collected dataset combined with wearable sleep metrics, I analyzed how event intensity influences:
