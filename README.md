@@ -1,114 +1,155 @@
-# Impact of High-Stimulation Events on Sleep Recovery
-This project explores how high-stimulation environments (e.g., concerts, festivals, nightlife events) impact next-day sleep quality and recovery duration.
+# 🎧 Rave Health Analytics: Modeling Sleep, Recovery, and Experience
 
-Using a self-collected dataset combined with wearable sleep metrics, I analyzed how event intensity influences:
+## Overview
 
-Next-day sleep score changes
-Recovery time (days to return to baseline)
-Variation across event types and environments
+This project explores how different aspects of rave experiences—such as intensity, substance use, and environment—impact next-day sleep, recovery time, and overall experience quality.
 
-The goal was to treat personal behavioral data with the same rigor as a real-world analytics problem.
+Using a self-collected dataset of events and wearable health metrics, the goal is to answer:
 
-Key Questions
-Do higher-intensity events lead to larger next-day sleep disruptions?
-How long does it take to recover from different types of events?
-Are certain event categories (e.g., bass-heavy shows vs. lower-intensity environments) consistently associated with worse outcomes?
-Dataset
+> **What are the tradeoffs between how hard I go and how I feel after?**
 
-The dataset includes event-level and physiological metrics:
+---
 
-Event Variables
+## Dataset
 
-Event Name
-Date
-Event Type (festival, venue, etc.)
-Genre
-Crowd Size / Density
-Social Context (solo vs. group)
+The dataset combines:
 
-Behavioral / Environmental Inputs
+**Event-level inputs**
+- Event type (festival, venue, warehouse)
+- Crowd size and density
+- Visual intensity
+- Substance use and dosage
+- Embodiment (subjective presence)
+- Energy before the event
+- Outfit expression level
 
-Intensity Score (self-reported composite)
-sensory stimulation
-duration
-overall exertion
-substance use (if applicable)
+**Health and recovery metrics**
+- Sleep score (baseline and post-event)
+- HRV status (converted to numeric score)
+- Recovery time (days to return to baseline)
 
-Physiological Outcomes
+**Derived features**
+- `intensity_score`
+- `rave_sleep_drop_from_baseline`
+- `days_to_recover_sleep`
+- `high_value_night`
 
-Sleep Score (wearable device)
-Sleep Score +1 (next-day effect)
-Days to Recover Sleep Baseline
-HRV metrics (tracked but not primary focus here)
-Methodology
-1. Event Alignment
+---
 
-Each event date was aligned with:
+## Key Metrics
 
-Same-day baseline sleep
-Next-day sleep outcome (+1 lag)
-2. Baseline Comparison
+### Intensity Score
+A weighted composite of:
+- visual intensity  
+- substance intensity  
+- embodiment  
+- energy before  
+- crowd size  
+- density  
+- outfit expression  
 
-For each event:
+This captures overall experience intensity in a single variable.
 
-Calculated deviation from baseline sleep score
-Measured sleep drop magnitude
-3. Recovery Metric
+---
 
-Defined recovery as:
+### Sleep Metrics
+- `sleep_baseline` → sleep before event  
+- `sleep_plus1` → sleep after event  
+- `rave_sleep_drop_from_baseline` → change due to event  
 
-Number of days until sleep score returned to baseline range
-4. Intensity Modeling
+---
 
-Used a self-reported composite intensity score to approximate total physiological load from:
+### Recovery
+- `days_to_recover_sleep` → days until sleep returns to baseline  
 
-environment
-duration
-exertion
-substance exposure
-Key Findings
-1. High-Intensity Events Drive Larger Sleep Disruptions
-High-intensity bass events (e.g., Get Lucky, Mersiv)
-Produced the largest next-day drops:
-→ ~40–60 point decreases in sleep score
-2. Recovery is Multi-Day, Not Immediate
-High-intensity events required:
-→ 2–3 days to return to baseline
-Lower-intensity or sober events:
-→ Minimal disruption and near-immediate recovery
-3. Intensity is a Stronger Signal Than Event Type Alone
-Not all events produce disruption
-Intensity level explains variance better than category labels
-Visualization
+---
 
-The Tableau dashboard highlights:
+### Experience Quality
+- `high_value_night` defined as:
+  - embodiment ≥ 9  
+  - recovery ≤ 1 day  
 
-Time series of sleep scores
-Overlaid with event markers
-Sleep drop vs. recovery duration
-Compared across events
-Intensity gradient encoding
-Used to visually connect stimulus → outcome
+---
 
-Tools Used
-Python / Pandas → data cleaning & transformation
-Tableau → visualization & dashboard design
-Wearable data integration → sleep metrics
-Why This Project Matters
+## Methodology
 
-This project demonstrates:
+### Validation Strategy
 
-Translating real-world behavior into structured data
-Designing lag-based outcome analysis
-Building interpretable, narrative-driven dashboards
+Because the dataset is small (~12–16 observations),  
+**leave-one-out cross-validation (LOOCV)** was used.
 
-While the dataset is personal, the analytical approach mirrors:
+This:
+- maximizes training data  
+- evaluates every observation out-of-sample  
+- avoids unreliable train/test splits  
 
-health analytics
-behavioral science
-user outcome modeling
-Future Improvements
-Expand sample size across more events
-Incorporate HRV as a primary outcome variable
-Apply statistical modeling (regression / mixed effects)
-Compare against control (non-event baseline periods)
+---
+
+### Models
+
+**Regression**
+- Linear Regression (interpretable baseline)
+- Random Forest (nonlinear comparison)
+
+**Classification**
+- Logistic Regression
+- Random Forest Classifier
+
+---
+
+### Metrics
+
+- Regression → Mean Absolute Error (MAE)  
+- Classification → Accuracy  
+
+---
+
+## Results
+
+### Sleep After Rave
+
+| Model | MAE |
+|------|-----|
+| Linear Regression | 11.31 |
+| Random Forest | 11.02 |
+
+---
+
+### Sleep Impact (Drop from Baseline)
+
+| Model | MAE |
+|------|-----|
+| Linear Regression | 11.31 |
+| Random Forest | 11.04 |
+
+---
+
+### Recovery Time
+
+| Model | MAE |
+|------|-----|
+| Linear Regression | 0.73 |
+| Random Forest | 0.77 |
+
+---
+
+## Key Findings
+
+### 1. Intensity drives sleep disruption
+
+Higher intensity events are strongly associated with worse next-day sleep.
+
+- R² ≈ 0.76  
+- ~0.87 drop in sleep score per intensity point  
+
+---
+
+### 2. Substance use drives recovery
+
+Higher substance intensity is associated with longer recovery time.
+
+- ~0.12 additional recovery days per unit  
+
+---
+
+### 3. Sleep and recovery follow a chain
