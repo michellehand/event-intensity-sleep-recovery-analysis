@@ -186,15 +186,6 @@ A simple function predicts outcomes:
 
 ## Limitations
 
-**Outputs:**
-- predicted sleep after event
-- predicted sleep impact
-- predicted recovery time
-
----
-
-## Limitations
-
 - Small sample size
 - Self-reported behavioral variables
 - HRV measured as categorical status
