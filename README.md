@@ -153,3 +153,49 @@ Higher substance intensity is associated with longer recovery time.
 ---
 
 ### 3. Sleep and recovery follow a chain
+ - Intensity → Sleep Impact → Recovery Time
+
+---
+
+### 4. Simple models perform best
+
+- Random Forest did not outperform linear models  
+- Relationships appear largely linear  
+- Signal is driven by a small number of variables  
+
+---
+
+### 5. Composite intensity is highly predictive
+
+A single `intensity_score` captured more signal than modeling individual features separately.
+
+---
+
+## Scenario Simulation
+
+A simple function predicts outcomes:
+
+`predict_event_scenario(sleep_baseline=85, intensity_score=75)`
+
+**Outputs:**
+- predicted sleep after event  
+- predicted sleep impact  
+- predicted recovery time  
+
+---
+
+## Limitations
+
+**Outputs:**
+- predicted sleep after event
+- predicted sleep impact
+- predicted recovery time
+
+---
+
+## Limitations
+
+- Small sample size
+- Self-reported behavioral variables
+- HRV measured as categorical status
+- Results reflect individual patterns, not population-level conclusions
