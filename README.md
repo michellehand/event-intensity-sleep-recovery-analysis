@@ -1,8 +1,8 @@
-# 🎧 Rave Health Analytics: Modeling Sleep, Recovery, and Experience
+# 🎧 Music Health Analytics: Modeling Sleep, Recovery, and Experience
 
 ## Overview
 
-This project explores how different aspects of rave experiences—such as intensity, substance use, and environment—impact next-day sleep, recovery time, and overall experience quality.
+This project explores how different aspects of musical experiences—such as intensity, steps, and environment—impact next-day sleep, recovery time, and overall experience quality.
 
 Using a self-collected dataset of events and wearable health metrics, the goal is to answer:
 
@@ -18,7 +18,7 @@ The dataset combines:
 - Event type (festival, venue, warehouse)
 - Crowd size and density
 - Visual intensity
-- Substance use and dosage
+- Steps
 - Embodiment (subjective presence)
 - Energy before the event
 - Outfit expression level
@@ -41,7 +41,6 @@ The dataset combines:
 ### Intensity Score
 A weighted composite of:
 - visual intensity  
-- substance intensity  
 - embodiment  
 - energy before  
 - crowd size  
@@ -106,7 +105,7 @@ This:
 
 ## Results
 
-### Sleep After Rave
+### Sleep After Show
 
 | Model | MAE |
 |------|-----|
@@ -141,14 +140,6 @@ Higher intensity events are strongly associated with worse next-day sleep.
 
 - R² ≈ 0.76  
 - ~0.87 drop in sleep score per intensity point  
-
----
-
-### 2. Substance use drives recovery
-
-Higher substance intensity is associated with longer recovery time.
-
-- ~0.12 additional recovery days per unit  
 
 ---
 
